@@ -34,6 +34,7 @@ $(function() {
 	})
 
 	var timer = null;
+	var pausing = false;
 	start.bind('click', function() {
 		clearInterval(timer);
 		input1.attr('disabled', 'true');
@@ -71,6 +72,36 @@ $(function() {
 		input1.removeAttr('disabled').attr('placeholder', '00').val('');
 		input2.removeAttr('disabled').attr('placeholder', '00').val('');
 		clearInterval(timer);
+		timer=null;
+	})
+	
+	input1.on("keyup",function(event){
+		if(event.keyCode==13){
+			start.trigger('click');
+		}else if(event.keyCode==39){
+			input2[0].focus();
+		}
+	})
+	
+	input2.keyup(function(event){
+		if(event.keyCode==13){
+			start.trigger('click');
+		}else if(event.keyCode==37){
+			input1[0].focus();
+		}
+	})
+	
+	$('body').on('keyup',function(){
+		if(event.keyCode==32 && timer && pausing==false){
+			pause.trigger('click');
+			pausing=true;
+		}else if(event.keyCode==32 && pausing){
+			start.trigger('click');
+			pausing=false;
+		}else if(event.keyCode==27){
+			reset.trigger('click');
+		}
+		console.log(event.keyCode);
 	})
 
 })
