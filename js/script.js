@@ -101,7 +101,6 @@ $(function() {
 		}else if(event.keyCode==27){
 			reset.trigger('click');
 		}
-		console.log(event.keyCode);
 	})
 
 })
